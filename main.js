@@ -1,7 +1,12 @@
-const button = document.querySelector(".list__header-btn");
+const button = document.querySelector(".creat");
+
 const ul = document.querySelector(".list");
 
 const inputValue = document.querySelector(".list__header-input");
+
+const iconPlus = document.querySelector(".fa-plus")
+
+const btnCancel = document.querySelector(".btn-cancel");
 
 
 inputValue.focus();
@@ -13,9 +18,11 @@ inputValue.addEventListener("keypress", (e)=>{
 
 
 button.addEventListener("click", () =>{
+
     if(inputValue.value === ""){
 
         alert("Preencha o campo por favor");
+
         inputValue.focus();
 
     }else{
@@ -25,7 +32,8 @@ button.addEventListener("click", () =>{
     };
 });
 
-
+/* ESTA FUNCÃO CRIA OS ELEMENTOS HTML E OS INSERE NA TELA */
+/* INOCIO */
 function creatItem(){
 
     
@@ -66,14 +74,18 @@ function creatItem(){
     ul.appendChild(li)
 
 }
+/* FIM */
 
+/* ESTA FUNÇÃO PEGA PARAGRAFO E INSERE O TEXTO DENTRO DO PARAGRAFO PARA EM SEGUIDA IMPRIMI-LO */
+/* INICIO */
 function insertText(p){
 
         p.innerHTML = inputValue.value;
-        inputValue.value = "";
+        clearInput();
         inputValue.focus();
 
 }
+/* FIM */
 
 
 ul.addEventListener("click", (e)=>{
@@ -82,8 +94,20 @@ ul.addEventListener("click", (e)=>{
 
     if(el.classList.contains("fa-trash-can")){
 
+        verifyInputValueForDelete(el);
+
         el.parentElement.parentElement.parentElement.remove();
-        verifyInputValueForDelete(el)
+
+        btnCancel.style.display = "none";
+    
+        if(iconPlus.classList == "fa-solid fa-check-double"){
+
+            iconPlus.classList = "fa-solid fa-plus";
+
+            inputValue.focus();
+
+        }
+
         inputValue.focus();
 
 
@@ -96,13 +120,43 @@ ul.addEventListener("click", (e)=>{
 
         }else{
             
-        const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
+            const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
 
-        inputValue.value = text.innerHTML;
-        }
+            inputValue.value = text.innerHTML;
+            
+            inputValue.focus();
+
+
+
+            if(iconPlus.classList == "fa-solid fa-plus"){
+                
+                iconPlus.classList = "fa-solid fa-check-double";
+
+                button.classList.remove("creat")
+                button.classList = "edit";
+                btnCancel.style.display = "block"
+            } 
+            
+
+        };
 
     }
 });
+
+btnCancel.addEventListener("click",()=>{
+
+    btnCancel.style.display = "none";
+    
+    if(iconPlus.classList == "fa-solid fa-check-double"){
+
+        iconPlus.classList = "fa-solid fa-plus";
+
+        clearInput();
+        inputValue.focus();
+
+    }
+    
+})
 
 
 function verifyInputValueForDelete(el){
@@ -111,9 +165,20 @@ function verifyInputValueForDelete(el){
 
     if(inputValue.value === text.innerHTML){
 
-        inputValue.value = "";
-
+        clearInput();
     }
 }
 
+function clearInput(){
+
+    inputValue.value = "";
+
+}
+
+/* const iconCorect = document.querySelector(".fa-check-double");
+
+iconCorect.addEventListener("click", (e)=>{
+    console.log(e)
+})
+ */
 
