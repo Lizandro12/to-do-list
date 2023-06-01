@@ -99,9 +99,12 @@ ul.addEventListener("click", (e)=>{
         const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
 
         inputValue.value = text.innerHTML;
+        inputValue.focus();
+
         }
 
     }
+    
 });
 
 
