@@ -122,7 +122,17 @@ ul.addEventListener("click", (e)=>{
             
             const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
 
-        inputValue.value = text.innerHTML;
+            inputValue.value = text.innerHTML;
+
+            if(iconPlus.classList == "fa-solid fa-plus"){
+
+                btnCancel.style.display = "block";
+                
+                iconPlus.classList = "fa-solid fa-check-double";
+        
+                inputValue.focus();
+        
+            }
         }
 
     }
