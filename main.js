@@ -4,9 +4,9 @@ const ul = document.querySelector(".list");
 
 const inputValue = document.querySelector(".list__header-input");
 
-const iconPlus = document.querySelector(".fa-plus")
+const buttonEdit = document.querySelector(".edit")
 
-const btnCancel = document.querySelector(".btn-cancel");
+const btnCancel = document.querySelector(".cancel");
 
 
 inputValue.focus();
@@ -92,21 +92,20 @@ ul.addEventListener("click", (e)=>{
 
     const el = e.target;
 
+    const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
+
     if(el.classList.contains("fa-trash-can")){
 
         verifyInputValueForDelete(el);
 
         el.parentElement.parentElement.parentElement.remove();
 
-        btnCancel.style.display = "none";
-    
-        if(iconPlus.classList == "fa-solid fa-check-double"){
 
-            iconPlus.classList = "fa-solid fa-plus";
+            btnCancel.style.display = "none";
+
+            buttonEdit.style.display = "none";
 
             inputValue.focus();
-
-        }
 
         inputValue.focus();
 
@@ -119,20 +118,18 @@ ul.addEventListener("click", (e)=>{
             alert("Edite a tarefa selecionada");
 
         }else{
-            
-            const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
 
             inputValue.value = text.innerHTML;
 
-            if(iconPlus.classList == "fa-solid fa-plus"){
+            btnCancel.style.display = "block";
 
-                btnCancel.style.display = "block";
-                
-                iconPlus.classList = "fa-solid fa-check-double";
-        
+            buttonEdit.style.display = "block";
+
+
+                /* button.style.display = "none"; */
+
                 inputValue.focus();
-        
-            }
+
         }
 
     }
@@ -142,15 +139,11 @@ ul.addEventListener("click", (e)=>{
 btnCancel.addEventListener("click",()=>{
 
     btnCancel.style.display = "none";
-    
-    if(iconPlus.classList == "fa-solid fa-check-double"){
 
-        iconPlus.classList = "fa-solid fa-plus";
+    buttonEdit.style.display = "none"
 
-        clearInput();
-        inputValue.focus();
-
-    }
+    clearInput();
+    inputValue.focus();
     
 })
 
@@ -170,11 +163,3 @@ function clearInput(){
     inputValue.value = "";
 
 }
-
-/* const iconCorect = document.querySelector(".fa-check-double");
-
-iconCorect.addEventListener("click", (e)=>{
-    console.log(e)
-})
- */
-

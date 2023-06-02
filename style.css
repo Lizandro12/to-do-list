@@ -73,16 +73,26 @@
 
 }
 
-.edit{
+/* .edit{
     padding: 1rem;
     border-radius: 10px;
     outline: none;
     border: none;
     background-color: #9BA4B5;
     cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 5.8%;
+    right: 11.2%;
+    display: none;
+} */
+
+.btns-box{
+    display: flex;
+    gap: 1rem;
 }
 
-.btn-cancel{
+.btn-box{
     border: none;
     outline: none;
     border-radius: 10px;
@@ -93,13 +103,18 @@
     background-color: #ffffff;
     cursor: pointer;
     color: #394867;
-    display: none;
+    display: block;
     transition: all 0.5s;
 }
 
-.btn-cancel:hover{
+
+.btn-box:hover{
     background-color: #ffffffef;
 
+}
+
+.cancel, .edit{
+    display: none;
 }
 .list__body{
     width: auto;
