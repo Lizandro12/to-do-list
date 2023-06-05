@@ -4,7 +4,7 @@ const ul = document.querySelector(".list");
 
 const inputValue = document.querySelector(".list__header-input");
 
-const buttonEdit = document.querySelector(".edit")
+const buttonEdit = document.querySelector(".edit");
 
 const btnCancel = document.querySelector(".cancel");
 
@@ -100,12 +100,13 @@ ul.addEventListener("click", (e)=>{
 
         el.parentElement.parentElement.parentElement.remove();
 
+        if( inputValue.value === text.innerHTML ){
 
             btnCancel.style.display = "none";
 
             buttonEdit.style.display = "none";
 
-            inputValue.focus();
+        }
 
         inputValue.focus();
 
