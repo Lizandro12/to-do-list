@@ -8,21 +8,31 @@ const buttonEdit = document.querySelector(".edit");
 
 const btnCancel = document.querySelector(".cancel");
 
+let holText = "";
+
+
 
 inputValue.focus();
 
+/* This event calls the function that creates the item when the enter key is pressed. */
+/* Begining */
 inputValue.addEventListener("keypress", (e)=>{
 
-    if(e.keyCode === 13) creatItem();
+    if(e.keyCode === 13 && inputValue.value != "" && buttonEdit.style.display != "block" && buttonEdit.style.display != "block"){
+
+        creatItem();
+
+    }
 });
+/* End */
 
-
+/* This event calls the function that creates the item when the button is clicked. */
+/* Begining */
 button.addEventListener("click", () =>{
 
     if(inputValue.value === ""){
 
         alert("Preencha o campo por favor");
-
         inputValue.focus();
 
     }else{
@@ -31,9 +41,10 @@ button.addEventListener("click", () =>{
 
     };
 });
+/* End */
 
-/* ESTA FUNCÃO CRIA OS ELEMENTOS HTML E OS INSERE NA TELA */
-/* INOCIO */
+/* This function creates the item and inserts it into the HTML body */
+/* Begining */
 function creatItem(){
 
     
@@ -74,10 +85,10 @@ function creatItem(){
     ul.appendChild(li)
 
 }
-/* FIM */
+/* End */
 
-/* ESTA FUNÇÃO PEGA PARAGRAFO E INSERE O TEXTO DENTRO DO PARAGRAFO PARA EM SEGUIDA IMPRIMI-LO */
-/* INICIO */
+/* This function inserts the input text into the paragraph and prints it to the screen with the item */
+/* Begining */
 function insertText(p){
 
         p.innerHTML = inputValue.value;
@@ -85,70 +96,58 @@ function insertText(p){
         inputValue.focus();
 
 }
-/* FIM */
+/* End */
 
-
+/* This event lets you know which item was clicked within the ul and thus remove the element or insert it into the input for editing */
+/* Begining */
 ul.addEventListener("click", (e)=>{
 
     const el = e.target;
 
     const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
-
+    /* Checks if the clicked element is the trash can icon */
     if(el.classList.contains("fa-trash-can")){
 
         verifyInputValueForDelete(el);
-
         el.parentElement.parentElement.parentElement.remove();
-
-        if( inputValue.value === text.innerHTML ){
-
-            btnCancel.style.display = "none";
-
-            buttonEdit.style.display = "none";
-
-        }
-
         inputValue.focus();
 
-
-
+    /* Checks if the clicked element is the pencil icon */
     } else if(el.classList.contains("fa-pen")){
 
-        if(!inputValue.value == " "){
+        if(!inputValue.value == ""){
 
             alert("Edite a tarefa selecionada");
 
         }else{
 
             inputValue.value = text.innerHTML;
-
+            holText = inputValue.value;
             btnCancel.style.display = "block";
-
             buttonEdit.style.display = "block";
-
-
-                /* button.style.display = "none"; */
-
-                inputValue.focus();
+            inputValue.focus();
 
         }
 
     }
     
 });
+/* End */
 
-btnCancel.addEventListener("click",()=>{
+/* This function clears the input and removes the edit and cancel buttons from the screen. */
+/* Begining */
+
+function clearInput(){
 
     btnCancel.style.display = "none";
+    buttonEdit.style.display = "none";
+    inputValue.value = "";
 
-    buttonEdit.style.display = "none"
+}
+/* End */
 
-    clearInput();
-    inputValue.focus();
-    
-})
-
-
+/* This function checks if the element being deleted has been called for editing and if so removes both the element and the content in the input */
+/* Begining */
 function verifyInputValueForDelete(el){
 
     const text = el.parentElement.parentElement.parentElement.querySelector(".list__item__text");
@@ -158,9 +157,47 @@ function verifyInputValueForDelete(el){
         clearInput();
     }
 }
+/* End */
 
-function clearInput(){
+/* This function checks if the input value inserted in the act of editing is the same as that of some element in the list and if the new input value is different from the elements in the list and edits */
+/* Begining */
+function editText(){
 
-    inputValue.value = "";
+    const originalText = ul.querySelectorAll(".list__item__text")
 
+    for (let i = 0; i < originalText.length; i++) {
+
+        const element = originalText[i];
+
+        if(element.innerHTML === holText && inputValue.value !=element.innerHTML){
+
+            element.innerHTML = inputValue.value;
+
+            clearInput();
+            inputValue.focus();
+
+        }
+        
+    }
 }
+/* End */
+
+/* This event cancels editing */
+/* Begining */
+btnCancel.addEventListener("click",()=>{
+
+    clearInput();
+    inputValue.focus();
+    
+});
+/* End */
+
+/* This event calls the previously described editing function */
+/* Begining */
+buttonEdit.addEventListener("click", ()=>{
+    
+    editText();
+    
+});
+/* End */
+
