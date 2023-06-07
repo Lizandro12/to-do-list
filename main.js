@@ -10,12 +10,13 @@ const btnCancel = document.querySelector(".cancel");
 
 let holText = "";
 
-
 const itens = JSON.parse(localStorage.getItem("itens")) || [];
 
 
 itens.forEach((element)=>{
-    creatItem(element)
+    
+    creatItem(element);
+
 })
 
 
@@ -83,10 +84,6 @@ function creatItem(currentItem){
 
     p.innerHTML = currentItem.nome;
 
-    inputValue.focus();
-
- /*    insertText(p); */
-
     const divIcons = document.createElement("div");
     divIcons.classList.add("icons");
 
@@ -115,7 +112,7 @@ function creatItem(currentItem){
     li.insertBefore(p, divIcons);
     ul.appendChild(li);
 
-    
+    inputValue.focus();
 
 }
 /* End */
@@ -147,10 +144,24 @@ ul.addEventListener("click", (e)=>{
     const el = e.target;
 
     const text = e.target.parentElement.parentElement.parentElement.querySelector(".list__item__text");
+
     /* Checks if the clicked element is the trash can icon */
     if(el.classList.contains("fa-trash-can")){
 
         verifyInputValueForDelete(el);
+
+        for (let i = 0; i < itens.length; i++) {
+            const element = itens[i];
+            
+            if(element.nome === text.innerHTML){
+
+                itens.splice(i, 1);
+                localStorage.setItem("itens", JSON.stringify(itens));
+
+            }
+            
+        }
+
         el.parentElement.parentElement.parentElement.remove();
         inputValue.focus();
 
@@ -205,15 +216,19 @@ function verifyInputValueForDelete(el){
 /* Begining */
 function editText(){
 
-    const originalText = ul.querySelectorAll(".list__item__text")
+    const originalText = ul.querySelectorAll(".list__item__text");
 
-    for (let i = 0; i < originalText.length; i++) {
+    for (let i = 0; i < itens.length; i++) {
 
-        const element = originalText[i];
+        const element = itens[i];
 
-        if(element.innerHTML === holText && inputValue.value !=element.innerHTML){
+        if(element.nome === holText && inputValue.value != element.nome){
 
-            element.innerHTML = inputValue.value;
+            element.nome = inputValue.value
+
+            localStorage.setItem("itens", JSON.stringify(itens));
+
+            //Falta adicionar o nome editado no parãgrafo dinamicamente
 
             clearInput();
             inputValue.focus();
