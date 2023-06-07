@@ -11,6 +11,13 @@ const btnCancel = document.querySelector(".cancel");
 let holText = "";
 
 
+const itens = JSON.parse(localStorage.getItem("itens")) || [];
+
+
+itens.forEach((element)=>{
+    creatItem(element)
+})
+
 
 inputValue.focus();
 
@@ -20,7 +27,16 @@ inputValue.addEventListener("keypress", (e)=>{
 
     if(e.keyCode === 13 && inputValue.value != "" && buttonEdit.style.display != "block" && buttonEdit.style.display != "block"){
 
-        creatItem();
+        const currentItem = {
+            "nome": inputValue.value
+        
+        }
+
+        creatItem(currentItem);    
+        itens.push(currentItem)
+    
+        localStorage.setItem("itens", JSON.stringify(itens));
+        clearInput();
 
     }
 });
@@ -37,7 +53,18 @@ button.addEventListener("click", () =>{
 
     }else{
 
-        creatItem();
+        const currentItem = {
+            "nome": inputValue.value
+        
+        }
+
+        creatItem(currentItem);    
+        itens.push(currentItem)
+    
+        localStorage.setItem("itens", JSON.stringify(itens));
+        clearInput();
+
+
 
     };
 });
@@ -45,7 +72,7 @@ button.addEventListener("click", () =>{
 
 /* This function creates the item and inserts it into the HTML body */
 /* Begining */
-function creatItem(){
+function creatItem(currentItem){
 
     
     const li = document.createElement("li");
@@ -54,7 +81,11 @@ function creatItem(){
     const p = document.createElement("p");
     p.classList.add("list__item__text");
 
-    insertText(p);
+    p.innerHTML = currentItem.nome;
+
+    inputValue.focus();
+
+ /*    insertText(p); */
 
     const divIcons = document.createElement("div");
     divIcons.classList.add("icons");
@@ -82,20 +113,31 @@ function creatItem(){
 
     li.appendChild(divIcons);
     li.insertBefore(p, divIcons);
-    ul.appendChild(li)
+    ul.appendChild(li);
+
+    
 
 }
 /* End */
 
 /* This function inserts the input text into the paragraph and prints it to the screen with the item */
 /* Begining */
-function insertText(p){
+/* function insertText(p){
 
-        p.innerHTML = inputValue.value;
-        clearInput();
-        inputValue.focus();
+    const currentItem = {
+        "nome": inputValue.value
 
-}
+    }
+    clearInput();
+
+    itens.push(currentItem)
+
+    localStorage.setItem("itens", JSON.stringify(itens));
+    p.innerHTML = itens.nome;
+
+    inputValue.focus();
+
+} */
 /* End */
 
 /* This event lets you know which item was clicked within the ul and thus remove the element or insert it into the input for editing */
