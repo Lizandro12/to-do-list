@@ -63,6 +63,10 @@
     margin: 1rem 0;
 }
 
+.list__header-input::placeholder{
+    color: #677492;
+}
+
 .list__header-btn{
     padding: 1rem;
     border-radius: 10px;
