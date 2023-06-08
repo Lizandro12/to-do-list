@@ -117,26 +117,6 @@ function creatItem(currentItem){
 }
 /* End */
 
-/* This function inserts the input text into the paragraph and prints it to the screen with the item */
-/* Begining */
-/* function insertText(p){
-
-    const currentItem = {
-        "nome": inputValue.value
-
-    }
-    clearInput();
-
-    itens.push(currentItem)
-
-    localStorage.setItem("itens", JSON.stringify(itens));
-    p.innerHTML = itens.nome;
-
-    inputValue.focus();
-
-} */
-/* End */
-
 /* This event lets you know which item was clicked within the ul and thus remove the element or insert it into the input for editing */
 /* Begining */
 ul.addEventListener("click", (e)=>{
@@ -168,7 +148,7 @@ ul.addEventListener("click", (e)=>{
     /* Checks if the clicked element is the pencil icon */
     } else if(el.classList.contains("fa-pen")){
 
-        if(!inputValue.value == ""){
+        if(inputValue.value != ""){
 
             alert("Edite a tarefa selecionada");
 
@@ -228,7 +208,15 @@ function editText(){
 
             localStorage.setItem("itens", JSON.stringify(itens));
 
-            //Falta adicionar o nome editado no parãgrafo dinamicamente
+            for (let i = 0; i < originalText.length; i++) {
+                const el = originalText[i];
+
+                if(el.innerHTML == holText){
+
+                    el.innerHTML = element.nome;
+                }
+                
+            }
 
             clearInput();
             inputValue.focus();
